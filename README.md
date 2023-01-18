@@ -28,7 +28,7 @@ The things you need before installing the software.
 
 ### Installation
 
-A step by step guide that will tell you how to get the development environment up and running.
+A guide that will tell you how to get the development environment up and running.
 
 ```
 $ First step

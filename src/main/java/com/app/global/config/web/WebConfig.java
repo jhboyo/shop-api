@@ -46,7 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
         return filterFilterRegistrationBean;
     }
 
-    @Override
+    /*@Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(jsonEscapeConverter());
     }
@@ -57,5 +57,5 @@ public class WebConfig implements WebMvcConfigurer {
         copy.getFactory().setCharacterEscapes(new HtmlCharacterEscapes());
 
         return new MappingJackson2HttpMessageConverter(copy);
-    }
+    }*/
 }

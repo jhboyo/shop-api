@@ -7,10 +7,10 @@ server:
 spring:
   # todo 개발 데이터베이스 연결
   datasource:
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create
@@ -20,6 +20,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 500 #일대다 컬렉션 조회 시 성능 최적화
     open-in-view: false # 영속석 컨텍스트이 생존 범위를 트랜잭션 범위로 한정
+    database: postgresql
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher #Swagger 3.0지원
