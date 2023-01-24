@@ -40,6 +40,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
 
 
