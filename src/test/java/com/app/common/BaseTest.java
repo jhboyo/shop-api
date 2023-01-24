@@ -23,8 +23,8 @@ public class BaseTest {
     @Autowired
     protected ObjectMapper objectMapper;
 
-    @Autowired
-    protected  ModelMapper modelMapper;
+    //@Autowired
+    //protected  ModelMapper modelMapper;
 
 
 }

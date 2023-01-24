@@ -2,6 +2,10 @@ server:
   port: 8080
   servlet:
     context-path: /
+    encoding:
+      force-response: true
+      charset: UTF-8
+      force: true
 
 
 spring:
@@ -19,8 +23,10 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 500 #일대다 컬렉션 조회 시 성능 최적화
+
     open-in-view: false # 영속석 컨텍스트이 생존 범위를 트랜잭션 범위로 한정
     database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher #Swagger 3.0지원
@@ -28,11 +34,21 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  devtools:
+    livereload:
+      enabled: true
+  thymeleaf:
+    cache: true
 
 logging:
   level:
-    org.hibernate.type: trace
+    org:
+      hibernate:
+        type.descriptor.sql: trace #쿼리에 물음표로 출력되는 바인 파라미터 출력
+        sql: debug
     com.app: debug #todo 패키지 수정
 
 feign:

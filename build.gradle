@@ -1,12 +1,20 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.6'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.app'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
+
 
 configurations {
 	compileOnly {
@@ -22,24 +30,37 @@ ext {
 	set('springCloudVersion', "2021.0.4")
 }
 
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+
+
+
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	//runtimeOnly 'com.h2database:h2'
-	//testImplementation 'com.h2database:h2'
+	testImplementation 'com.h2database:h2'
 	implementation 'org.postgresql:postgresql'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.0'
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1' //xss attack detection
 	implementation 'org.apache.commons:commons-text:1.10.0'
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
 }
+
 
 dependencyManagement {
 	imports {
@@ -50,3 +71,25 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+
+// querydsl 세팅 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+// querydsl 세팅 끝
